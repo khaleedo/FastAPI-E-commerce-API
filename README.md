@@ -1,15 +1,11 @@
 # FastAPI E-commerce API
 
-<<<<<<< HEAD
 [![CI](https://github.com/khaleedo/FastAPI-E-commerce-API/actions/workflows/ci.yml/badge.svg)](https://github.com/khaleedo/FastAPI-E-commerce-API/actions)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)]
 
 A production-ready **FastAPI** backend for an e-commerce platform, built with **PostgreSQL**, **Docker**, and deployed on **Kubernetes** with **CI/CD via GitHub Actions**.
 
 ---
-=======
-A production-ready **FastAPI** backend for an e-commerce platform, built with **PostgreSQL**, **Docker**, and deployed on **Kubernetes** with **CI/CD via GitHub Actions**.  
->>>>>>> 63d0b17 (Create README.md)
 
 ## ✨ Features
 - User authentication with JWT  
@@ -17,7 +13,6 @@ A production-ready **FastAPI** backend for an e-commerce platform, built with **
 - Product listings & order management  
 - PostgreSQL database integration  
 - Docker containerization & Kubernetes manifests  
-<<<<<<< HEAD
 - CI/CD with GitHub Actions and deployment to AWS EKS  
 
 ---
@@ -196,91 +191,3 @@ MIT — feel free to reuse and adapt for demos or interviews.
 
 ## Contact
 If you want this README tweaked (add badges, custom commands, or team-conventions), open an issue or DM me on GitHub.
-=======
-- CI/CD with GitHub Actions and deplo2. Install dependencies
-  
-## 🚀 Run Locally
-
-### 1. Clone the repository
-```bash
-git clone https://github.com/<your-username>/<your-repo>.git
-cd <your-repo>
-2. Install dependencies
-pip install -r requirements.txt
-
-3. Start the FastAPI server
-uvicorn app.main:app --reload
-
-
-Your API will be available at:
-👉 http://127.0.0.1:8000/docs
- (interactive Swagger UI)
-
-🐳 Run with Docker
-1. Build the image
-docker build -t ecommerce-api:latest .
-
-2. Run the container
-docker run -d -p 8000:8000 \
-  -e DATABASE_URL="postgresql://postgres:postgres@localhost:5432/ecommerce_db" \
-  ecommerce-api:latest
-
-☸️ Deploy on Kubernetes (AWS EKS)
-1. Apply namespace
-kubectl apply -f k8s/namespace.yaml
-
-2. Deploy PostgreSQL
-kubectl apply -f k8s/postgres-deployment.yaml
-kubectl apply -f k8s/postgres-service.yaml
-
-3. Deploy FastAPI app
-kubectl apply -f k8s/deployment.yaml
-kubectl apply -f k8s/service.yaml
-
-4. Apply Ingress (optional if domain available)
-kubectl apply -f k8s/ingress.yaml
-
-⚙️ CI/CD with GitHub Actions
-
-This project uses GitHub Actions for testing, building, and deployment:
-
-Test Job
-
-Spins up PostgreSQL service
-
-Runs unit tests with pytest
-
-Runs lint checks with flake8
-
-Build & Push Job
-
-Builds Docker image
-
-Pushes image to GitHub Container Registry (GHCR)
-
-Deploy Job
-
-Applies Kubernetes manifests to AWS EKS
-
-Uses kubectl for rolling updates
-
-Pipeline triggers:
-
-On push to main or develop branches
-
-On pull request targeting main
-
-📄 API Documentation
-
-After deployment, visit:
-👉 /docs for Swagger UI
-👉 /redoc for ReDoc
-
-🔑 Secrets / Environment Variables
-
-DATABASE_URL → PostgreSQL connection string
-
-SECRET_KEY → JWT signing key (K8s Secret-managed)yment to AWS EKS  
-
----
->>>>>>> 63d0b17 (Create README.md)
