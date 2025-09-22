@@ -22,7 +22,8 @@ A production-ready **FastAPI** backend for an e-commerce platform, built with **
 - Docker  
 - kubectl configured for your cluster (EKS, minikube, kind, etc.)  
 - GitHub account (for GHCR and Actions)  
-- (Optional) AWS CLI configured if deploying to EKS from CI
+- AWS CLI configured with credentials  
+- Terraform CLI  
 
 ---
 
@@ -94,45 +95,38 @@ docker run -d -p 8000:8000 \
 
 ## ☸️ Deploy on Kubernetes (AWS EKS — minimal steps)
 
-> These steps assume you have a working Kubernetes cluster and `kubectl` context set.
+1. Create EKS Cluster with Terraform
 
-1. Apply namespace:
-```bash
-kubectl apply -f k8s/namespace.yaml
-```
+Terraform files are in infra/:
 
-2. Deploy PostgreSQL (unless you use managed RDS):
-```bash
+main.tf → providers + VPC + EKS cluster
+
+nodes.tf → managed node group
+
+iam.tf → IAM roles and policies
+
+variables.tf → input vars (region, cluster name, etc.)
+
+outputs.tf → kubeconfig + cluster outputs
+
+cd infra
+terraform init
+terraform plan
+terraform apply -auto-approve
+
+2. Connect kubectl to EKS
+aws eks --region <your-region> update-kubeconfig --name <cluster-name>
+kubectl get nodes
+
+3. Deploy PostgreSQL
 kubectl apply -f k8s/postgres-deployment.yaml
 kubectl apply -f k8s/postgres-service.yaml
-```
 
-3. Create app secrets (example using literals — in CI you would create from GitHub secrets)
-```bash
-kubectl -n ecommerce create secret generic app-secrets \
-  --from-literal=database-url='postgresql+psycopg2://postgres:postgres@postgres-service:5432/ecommerce_db' \
-  --from-literal=secret-key='your_super_secret_key_here'
-```
-
-4. Deploy FastAPI app and service:
-```bash
+4. Deploy FastAPI app
 kubectl apply -f k8s/deployment.yaml
 kubectl apply -f k8s/service.yaml
-```
+kubectl apply -f k8s/ingress.yaml   
 
-5. (Optional) Ingress — if you have a domain or want to test via external IP:
-```bash
-kubectl apply -f k8s/ingress.yaml
-```
-
-6. Check rollout:
-```bash
-kubectl rollout status deployment/fastapi-app -n ecommerce
-kubectl get pods -n ecommerce
-kubectl get svc -n ecommerce
-```
-
----
 
 ## ⚙️ CI/CD with GitHub Actions (overview)
 
